@@ -1,0 +1,35 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Ensure that everything is transparent,
+// so that the chat page can be seen through the extension
+* {
+  background-color: transparent !important;
+  overflow: hidden !important;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+}
+
+// Stack emotions horizontally if screen is wider
+@media (min-aspect-ratio: 3/4) {
+  .big-stacker {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-rows: none;
+  }
+}
+
+// Stack emotions vertically if screen is taller
+@media (max-aspect-ratio: 3/4) {
+  .big-stacker {
+    grid-template-columns: none;
+    grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+}
