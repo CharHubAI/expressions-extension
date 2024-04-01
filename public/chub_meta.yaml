@@ -56,3 +56,4 @@ github_path: "https://github.com/CharHubAI/expressions-extension"
 # This is here for future cases where ex. you need user secrets,
 #    but currently does nothing.
 permissions:
+extension_id: 'null'
