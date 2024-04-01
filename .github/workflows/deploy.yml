@@ -26,7 +26,7 @@ jobs:
           if [ "${{ secrets.EXTENSION_ID }}" == "" ]; then
              echo "Secret EXTENSION_ID does not exist; attempting to read from file"
              EXTENSION_ID=$(grep '^extension_id:' public/chub_meta.yaml | cut -d ':' -f2 | tr -d " '\"")
-             if [ -z "EXTENSION_ID" ]; then
+             if [ "${EXTENSION_ID}" == "" ]; then
                 echo "Extension ID not present in public/chub_meta.yaml extension_id field either. Creating new project."
                 EXTENSION_ID=""
                 curl -H "CH-API-KEY: ${{ secrets.CHUB_AUTH_TOKEN }}" -H "Content-Type: application/json" --request POST --data '{"name":"${{ github.event.repository.name }}"}'  https://api.chub.ai/extensions  -o creation.json
@@ -61,7 +61,7 @@ jobs:
           curl -H "CH-API-KEY: ${{ secrets.CHUB_AUTH_TOKEN }}" -F "file=@build.zip" https://api.chub.ai/extension/${{ env.EXTENSION_ID }}/upload
 
       # These steps are just for if you care about trying to use the UI editor and keeping them on the same version.
-      # Feel free to remove.
+      # Feel free to remove. It's experimental at best.
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -84,6 +84,8 @@ jobs:
               for root, dirs, files in os.walk(directory):
                   dirs[:] = [dir for dir in dirs if dir not in skip_dirs]
                   for file in files:
+                      if file_name.endswith(('.png', '.jpg', '.jpeg', '.gif', '.exe', '.zip')):
+                          continue
                       file_path = os.path.join(root, file)
                       directory_path = os.path.dirname(file_path)  
                       file_name = os.path.basename(file_path)   
