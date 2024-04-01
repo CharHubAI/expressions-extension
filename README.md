@@ -26,7 +26,3 @@ you'll need to get an extension auth token from [the api](https://api.chub.ai/op
 
 Then in the GitHub project, go to Settings -> Secrets and Variables -> Actions ->
 Repository secrets -> New Repository Secret. Add the token with the name "CHUB_AUTH_TOKEN".
-
-You'll also need to add your extension's ID, which is the part after your username in the url,
-e.g. "bartlebythescrivener-s-extension-edb5a90160e2". You can either add it directly to
-the .github/workflows/deploy.yml or add another secret called "EXTENSION_ID".

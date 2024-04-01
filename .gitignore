@@ -25,3 +25,4 @@ dist-ssr
 .idea/
 *.zip
 dist/
+creation.json
