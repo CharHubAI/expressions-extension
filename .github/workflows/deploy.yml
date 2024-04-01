@@ -32,7 +32,7 @@ jobs:
              EXTENSION_ID=$(grep '^extension_id:' public/chub_meta.yaml | cut -d ':' -f2 | tr -d " '\"")
              if [ "${EXTENSION_ID}" == "" ]; then
                 echo "Extension ID not present in public/chub_meta.yaml extension_id field either. Creating new project."
-                apt-get install jq
+                sudo apt-get install jq
                 EXTENSION_ID=""
                 curl -H "CH-API-KEY: ${{ secrets.CHUB_AUTH_TOKEN }}" -H "Content-Type: application/json" --request POST --data '{"name":"${{ github.event.repository.name }}"}'  https://api.chub.ai/extensions  -o creation.json
                 EXTENSION_ID=$(jq -r '.id_v2' creation.json)
