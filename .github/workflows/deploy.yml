@@ -36,6 +36,10 @@ jobs:
                 EXTENSION_ID=""
                 curl -H "CH-API-KEY: ${{ secrets.CHUB_AUTH_TOKEN }}" -H "Content-Type: application/json" --request POST --data '{"name":"${{ github.event.repository.name }}"}'  https://api.chub.ai/extensions  -o creation.json
                 EXTENSION_ID=$(jq -r '.id_v2' creation.json)
+                if [ "${EXTENSION_ID}" == "" ] || [ "${EXTENSION_ID}" == "null" ]; then
+                  echo "Extension ID creation failed; is your CHUB_AUTH_TOKEN secret set for this project?"
+                  exit 1
+                fi
                 echo "extension_id: '${EXTENSION_ID}'" >> public/chub_meta.yaml
                 git config --local user.email "action@github.com"
                 git config --local user.name "GitHub Action"
@@ -89,18 +93,21 @@ jobs:
               for root, dirs, files in os.walk(directory):
                   dirs[:] = [dir for dir in dirs if dir not in skip_dirs]
                   for file in files:
-                      if file_name.endswith(('.png', '.jpg', '.jpeg', '.gif', '.exe', '.zip')):
-                          continue
                       file_path = os.path.join(root, file)
-                      directory_path = os.path.dirname(file_path)  
-                      file_name = os.path.basename(file_path)   
-                      if not directory_path.endswith('/'):
-                        directory_path += '/'
-                      file_body = {'file_name': file_name, 
-                            'id': 0, 'file_path': directory_path, 'mime_type': '', 'file_content': ''}
-                      with open(file_path, 'r') as f:
-                          file_body['file_content'] = f.read()
-                      files_body['create_ids'].append(file_body)
+                      try:
+                        directory_path = os.path.dirname(file_path)  
+                        file_name = os.path.basename(file_path)   
+                        if file_name.endswith(('.png', '.jpg', '.jpeg', '.gif', '.exe', '.zip')):
+                            continue
+                        if not directory_path.endswith('/'):
+                          directory_path += '/'
+                        file_body = {'file_name': file_name, 
+                              'id': 0, 'file_path': directory_path, 'mime_type': '', 'file_content': ''}
+                        with open(file_path, 'r') as f:
+                            file_body['file_content'] = f.read()
+                        files_body['create_ids'].append(file_body)
+                      except Exception as ex:
+                          logging.error(f"Skipping botched file {file_path}. Error: {ex}")
           
           build_files('.')
           response = requests.post(api_url, json=files_body, headers={
