@@ -6,6 +6,10 @@ on:
       - main  # Or any branch you use for releases
       - master
 
+permissions:
+  contents: write
+  issues: read
+
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
@@ -28,14 +32,15 @@ jobs:
              EXTENSION_ID=$(grep '^extension_id:' public/chub_meta.yaml | cut -d ':' -f2 | tr -d " '\"")
              if [ "${EXTENSION_ID}" == "" ]; then
                 echo "Extension ID not present in public/chub_meta.yaml extension_id field either. Creating new project."
+                sudo apt-get install jq
                 EXTENSION_ID=""
                 curl -H "CH-API-KEY: ${{ secrets.CHUB_AUTH_TOKEN }}" -H "Content-Type: application/json" --request POST --data '{"name":"${{ github.event.repository.name }}"}'  https://api.chub.ai/extensions  -o creation.json
-                EXTENSION_ID=$(cat creation.json | cut -d '"id_v2":"' -f2 | cut -d '"' -f1)
+                EXTENSION_ID=$(jq -r '.id_v2' creation.json)
                 echo "extension_id: '${EXTENSION_ID}'" >> public/chub_meta.yaml
                 git config --local user.email "action@github.com"
                 git config --local user.name "GitHub Action"
                 git add public/chub_meta.yaml
-                git commit -m "Add new Extension ID to chub_meta.yaml"
+                git commit -m "Add new Extension ID to chub_meta.yaml" || true
                 git push
              else
                 echo "Extension ID found in public/chub_meta.yaml."
