@@ -13,7 +13,7 @@
   "dependencies": {
     "@typescript-eslint/parser": "^7.4.0",
     "@xenova/transformers": "^2.16.1",
-    "chub-extensions-ts": "^0.0.5",
+    "chub-extensions-ts": "^0.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

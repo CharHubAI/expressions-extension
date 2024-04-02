@@ -23,11 +23,11 @@ export const TestExtensionRunner = <ExtensionType extends Extension<StateType, C
                 console.error(`Error from extension during load, error: ${res.error}`);
             }
             extension.afterResponse({
-                anonymizedId: "2",
+                anonymizedId: "2", promptForId: null,
                 content: "Checking what happens if sent messages for a bot without a pack.",
                 isBot: true}).then(() => setNode(new Date()));
             extension.afterResponse({
-                anonymizedId: "1",
+                anonymizedId: "1", promptForId: null,
                 content: "I'm so confused. I don't understand. What? Why? How?",
                 isBot: true
             }).then(() => setNode(new Date()));

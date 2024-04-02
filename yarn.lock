@@ -3512,10 +3512,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chub-extensions-ts@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.0.5.tgz#99ca56df4d3f19ae111bd7c89f392eadc568fd9a"
-  integrity sha512-nImE4SJx80fh9ew000HTIrQapzUV45zQ/41Ex/CzlMT3H0PxIZvYTMLrEj3dcSk8JbxIaKLbrvfK97/7HbI5nQ==
+chub-extensions-ts@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.0.6.tgz#159be04e321cdf7196031432b788d9f932c65fa9"
+  integrity sha512-JiUGZzfW392GidEFnQywAOxWUE5zSXEPJ8Brd1J/1hqE2MyhrMFb3lkmNfePr1GEoK9r0+Dl1+jDEPWhFYBYBg==
   dependencies:
     "@types/react" "^18.2.73"
     csstype "^3.1.3"
