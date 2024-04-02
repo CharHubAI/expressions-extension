@@ -49,8 +49,6 @@ is_anonymous: false
 
 # Self-explanatory.
 ratings_disabled: false
-is_nsfw: false
-is_nsfl: false
 github_path: "https://github.com/CharHubAI/expressions-extension"
 
 # This is here for future cases where ex. you need user secrets,

@@ -84,6 +84,7 @@ jobs:
           python - <<EOF
           import os
           import requests
+          import logging
           
           api_url = "https://api.chub.ai/extension/${{ env.EXTENSION_ID }}/files"
           skip_dirs = {'.idea', '.github', 'dist', 'node_modules'}
