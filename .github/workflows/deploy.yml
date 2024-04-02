@@ -32,6 +32,11 @@ jobs:
           else
             echo "Writing github path 'https://github.com/${{ github.repository }}' to metadata file."
             echo "github_path: 'https://github.com/${{ github.repository }}'" >> public/chub_meta.yaml
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add public/chub_meta.yaml
+            git commit -m "Add github_path to chub_meta.yaml" || true
+            git push
           fi
           if [ "${{ secrets.EXTENSION_ID }}" == "" ]; then
              echo "Secret EXTENSION_ID does not exist; attempting to read from file"
