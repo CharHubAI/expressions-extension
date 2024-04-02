@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -p public/       
           touch public/chub_meta.yaml  
+          grep -q "github_path:" public/chub_meta.yaml && echo "github_path: 'https://github.com/${{ github.repository }}'" >> public/chub_meta.yaml || echo "Repo path already in metadata file."
           if [ "${{ secrets.EXTENSION_ID }}" == "" ]; then
              echo "Secret EXTENSION_ID does not exist; attempting to read from file"
              EXTENSION_ID=$(grep '^extension_id:' public/chub_meta.yaml | cut -d ':' -f2 | tr -d " '\"")

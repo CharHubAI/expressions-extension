@@ -49,7 +49,6 @@ is_anonymous: false
 
 # Self-explanatory.
 ratings_disabled: false
-github_path: "https://github.com/CharHubAI/expressions-extension"
 
 # This is here for future cases where ex. you need user secrets,
 #    but currently does nothing.
@@ -58,3 +57,5 @@ permissions:
 # This is automatically generated on push with a new project;
 #    you should not make or set this value.
 extension_id: 'expressions-extension-768927333d4d'
+
+# Will be added if it does not exist. The URL of the repo.
