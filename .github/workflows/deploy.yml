@@ -20,6 +20,15 @@ jobs:
         with:
           node-version: '21.7.1'
 
+      - name: Confirm CHUB_AUTH_TOKEN is set
+        env:
+          CHUB_AUTH_TOKEN: ${{ secrets.CHUB_AUTH_TOKEN }}
+        run: |
+          if [ "${{ secrets.CHUB_AUTH_TOKEN }}" == "" ] || [ "${{ secrets.CHUB_AUTH_TOKEN }}" == "null" ]; then
+             echo "Your CHUB_AUTH_TOKEN secret is not set for this project. Cannot proceed."
+             exit 1
+          fi
+
       - name: Get or Make Extension ID
         env:
           CHUB_AUTH_TOKEN: ${{ secrets.CHUB_AUTH_TOKEN }}
