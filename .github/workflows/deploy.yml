@@ -87,7 +87,7 @@ jobs:
           import logging
           
           api_url = "https://api.chub.ai/extension/${{ env.EXTENSION_ID }}/files"
-          skip_dirs = {'.idea', '.github', 'dist', 'node_modules'}
+          skip_dirs = {'.idea', '.github', 'dist', 'node_modules', '.git'}
           files_body = {'delete_ids': [-1], 'update_ids': {}, 'create_ids': []}
           
           def build_files(directory):
