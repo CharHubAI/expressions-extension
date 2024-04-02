@@ -30,6 +30,7 @@ jobs:
           if grep -q "github_path:" public/chub_meta.yaml; then
             echo "Repo path already in metadata file."
           else
+            echo "Writing github path 'https://github.com/${{ github.repository }}' to metadata file."
             echo "github_path: 'https://github.com/${{ github.repository }}'" >> public/chub_meta.yaml
           fi
           if [ "${{ secrets.EXTENSION_ID }}" == "" ]; then
