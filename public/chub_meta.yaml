@@ -46,7 +46,10 @@ config_schema:
       # to make it easy to define "I need this setting for each character".
       type: "character_map"
       # Could also be an object, etc.
-      value_type: "string"
+      value_type:
+        type: "dropdown"
+        default: 'default'
+        options: 'character.extensions.chub.alt_expressions.keys()'
       # For the types "character_map" and "character_array",
       # this is a boolean instead of the normal list.
       # If true, required for each character.
@@ -67,7 +70,9 @@ needs_history: false
 #   and is here more for future use cases.
 state_schema:
   type: "character_map"
-  value_type: "string"
+  value_type:
+    type: "string"
+    default: "neutral"
 
 
 # Whether to publish as 'Anonymous' instead of under your username.
