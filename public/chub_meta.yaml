@@ -31,6 +31,29 @@ needs_config: false
 # Config schemas are a superset of JSON Schema format
 # @link https://json-schema.org
 config_schema:
+  # Ignored.
+  $schema: "https://json-schema.org/draft/2020-12/schema"
+  # Will show in the UI. If not given, will be `${project_name} Config`
+  title: Expressions Config
+  # Will show in the UI if not null or empty as a subtitle.
+  description: ''
+  type: "object"
+  properties:
+    selected:
+      # The beginning of non-standard JSON Schema behavior.
+      # JSchema isn't great with the concept of dynamic
+      # schema generation. This is our little addition
+      # to make it easy to define "I need this setting for each character".
+      type: "character_map"
+      # Could also be an object, etc.
+      value_type: "string"
+      # For the types "character_map" and "character_array",
+      # this is a boolean instead of the normal list.
+      # If true, required for each character.
+      required: false
+      # Information shown beside this part of the form.
+      description: "Which expression pack to use, if there are multiple."
+  required: []
 
 # Whether this is state-based in a history-sensitive way,
 #   rather than being able to work with latest-only data.
@@ -43,6 +66,9 @@ needs_history: false
 # This isn't needed even if you do store state,
 #   and is here more for future use cases.
 state_schema:
+  type: "character_map"
+  value_type: "string"
+
 
 # Whether to publish as 'Anonymous' instead of under your username.
 is_anonymous: false
