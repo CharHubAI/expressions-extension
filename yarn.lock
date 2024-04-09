@@ -924,10 +924,10 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chub-extensions-ts@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.0.8.tgz#a31b7fe020cab81bd4d100704093db0bcc11d8de"
-  integrity sha512-BYyYQFtaaoCGHkuF4zzogpOzYYl7esYyd3Ig4L7/pRoTaNywqj0O49WWTqYlf91aiMx+vuMeEZqYmQLNTlCotA==
+chub-extensions-ts@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.1.1.tgz#f1c6c85f334b8c7b90d607aacb71ccff024a5fd5"
+  integrity sha512-az8tmEsRuyKRggqI/gqsInGAF4Fimv7fF7aYx4Rt1kYzWzC9lGFTMBgQcoV4zLemPi6l0PjqPo56KZpy5O6uIw==
   dependencies:
     "@types/node" "20.10.0"
     "@types/react" "^18.2.75"
