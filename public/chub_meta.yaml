@@ -47,10 +47,10 @@ config_schema:
       type: "character_map"
       # Could also be an object, etc.
       value_type:
-        type: "dropdown"
+        type: "string",
+        enum: 'character.extensions.chub.alt_expressions.keys()'
         default: 'default'
-        options: 'character.extensions.chub.alt_expressions.keys()'
-      # For the types "character_map" and "character_array",
+      # For the type "character_map",
       # this is a boolean instead of the normal list.
       # If true, required for each character.
       required: false
