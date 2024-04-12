@@ -72,8 +72,10 @@ export class Expressions implements Extension<StateType, ConfigType> {
         // because the extension runner has it.
         this.pipeline = await pipeline("text-classification",
             "SamLowe/roberta-base-go_emotions");
-        const testResult = await this.pipeline("I love you.");
-        console.assert(testResult != null && testResult[0].label == 'love');
+        if(import.meta.env.MODE === 'development') {
+            const testResult = await this.pipeline("I love you.");
+            console.assert(testResult != null && testResult[0].label == 'love');
+        }
         return {
             success: true,
             error: null
