@@ -34,6 +34,7 @@ export class Expressions implements Extension<StateType, ConfigType> {
     charsToPacks: {[key: string]: EmotionPack}
     charsToEmotions: {[key: string]: Emotion}
     pipeline: any
+    hasPack: boolean
 
     constructor(data: InitialData<StateType, ConfigType>) {
         const {
@@ -43,6 +44,7 @@ export class Expressions implements Extension<StateType, ConfigType> {
         } = data;
         this.charsToEmotions = {};
         this.charsToPacks = {};
+        this.hasPack = false;
         // This env setup is our own convention and not likely to be something
         // you'll want to do. We only host an extremely small subset of ONNX
         // HF models for things like this.
@@ -56,8 +58,12 @@ export class Expressions implements Extension<StateType, ConfigType> {
         Object.keys(characters).forEach((charAnonId: string) => {
             if(!characters[charAnonId].isRemoved) {
                 this.charsToEmotions[charAnonId] = lastState != null && lastState.hasOwnProperty(charAnonId) && EMOTIONS.has(lastState[charAnonId]) ? lastState[charAnonId] : 'neutral';
-                this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions?.chub?.expressions?.expressions != null ?
-                    characters[charAnonId].partial_extensions?.chub?.expressions?.expressions : {};
+                if (characters[charAnonId].partial_extensions?.chub?.expressions?.expressions != null) {
+                    this.charsToPacks = characters[charAnonId].partial_extensions?.chub?.expressions?.expressions;
+                    this.hasPack = true;
+                } else {
+                    this.charsToPacks[charAnonId] = {};
+                }
                 if(config != null && config.selected?.hasOwnProperty(charAnonId)) {
                     this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions
                         .chub?.expressions?.alt_expressions?.hasOwnProperty(config.selected![charAnonId]) && characters[charAnonId].partial_extensions.chub.expressions.alt_expressions[config.selected![charAnonId]].expressions != null ?
@@ -77,7 +83,7 @@ export class Expressions implements Extension<StateType, ConfigType> {
             console.assert(testResult != null && testResult[0].label == 'love');
         }
         return {
-            success: true,
+            success: this.hasPack,
             error: null
         };
     }
