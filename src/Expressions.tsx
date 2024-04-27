@@ -55,7 +55,7 @@ type InitStateType = null;
 
 type ChatStateType = null;
 
-export class Expressions implements Extension<InitStateType, ChatStateType, MessageStateType, ConfigType> {
+export class Expressions extends Extension<InitStateType, ChatStateType, MessageStateType, ConfigType> {
 
     charsToPacks: {[key: string]: EmotionPack}
     charsToEmotions: {[key: string]: Emotion}
@@ -63,6 +63,7 @@ export class Expressions implements Extension<InitStateType, ChatStateType, Mess
     hasPack: boolean
 
     constructor(data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) {
+        super(data);
         const {
             characters,
             config,

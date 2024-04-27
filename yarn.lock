@@ -356,6 +356,18 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.1.1.tgz#eb0f82461d12779bbafc1b5045cde3143d350a8a"
   integrity sha512-5WoDz3Y19Bg2BnErkZTp0en+c/i9PvgFS7MBe1+m60HjFr0hrphlAGp4yzI7pxpt4xShln4ZyYp4neJm8hmOkQ==
 
+"@ffmpeg/ffmpeg@^0.12.10":
+  version "0.12.10"
+  resolved "https://registry.yarnpkg.com/@ffmpeg/ffmpeg/-/ffmpeg-0.12.10.tgz#e3cce21f21f11f33dfc1ec1d5ad5694f4a3073c9"
+  integrity sha512-lVtk8PW8e+NUzGZhPTWj2P1J4/NyuCrbDD3O9IGpSeLYtUZKBqZO8CNj1WYGghep/MXoM8e1qVY1GztTkf8YYQ==
+  dependencies:
+    "@ffmpeg/types" "^0.12.2"
+
+"@ffmpeg/types@^0.12.2":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@ffmpeg/types/-/types-0.12.2.tgz#bc7eef321ae50225c247091f1f23fd3087c6aa1d"
+  integrity sha512-NJtxwPoLb60/z1Klv0ueshguWQ/7mNm106qdHkB4HL49LXszjhjCCiL+ldHJGQ9ai2Igx0s4F24ghigy//ERdA==
+
 "@huggingface/jinja@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@huggingface/jinja/-/jinja-0.2.2.tgz#faeb205a9d6995089bef52655ddd8245d3190627"
@@ -927,11 +939,12 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chub-extensions-ts@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.2.0.tgz#7ef2b07922acf69b07ce0062d19fe1053187b224"
-  integrity sha512-OASce8e58bjW9S8sYcWbVw3tYQwUtVvtQA2BKjcMg1iORdl19ThByeRmJtEavgW9oG1zf/G/ds0PH77BES70fg==
+chub-extensions-ts@latest:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.2.3.tgz#23c6e6123633da3e171387010011fcdc9786b6fd"
+  integrity sha512-1CJunh/+d2CKcQm9r3sYTD3LDkBPUjYAQ8HNvoy7ZR80yGdYu+K6UNqb7M2JvmNYw+t/AN8afLE5k3PlYJLrDQ==
   dependencies:
+    "@ffmpeg/ffmpeg" "^0.12.10"
     "@types/node" "20.10.0"
     "@types/react" "^18.2.79"
     "@types/uuid" "^9.0.8"
