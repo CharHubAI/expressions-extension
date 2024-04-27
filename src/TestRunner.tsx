@@ -3,12 +3,12 @@ import {useEffect, useState} from "react";
 import {Extension, InitialData} from "chub-extensions-ts";
 import InitData from './assets/test-init.json';
 
-export interface TestExtensionRunnerProps<ExtensionType extends Extension<StateType, ConfigType>, StateType, ConfigType> {
-    factory: (data: InitialData<StateType, ConfigType>) => ExtensionType;
+export interface TestExtensionRunnerProps<ExtensionType extends Extension<InitStateType, ChatStateType, MessageStateType, ConfigType>, InitStateType, ChatStateType, MessageStateType, ConfigType> {
+    factory: (data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) => ExtensionType;
 }
 
-export const TestExtensionRunner = <ExtensionType extends Extension<StateType, ConfigType>,
-    StateType, ConfigType>({ factory }: TestExtensionRunnerProps<ExtensionType, StateType, ConfigType>) => {
+export const TestExtensionRunner = <ExtensionType extends Extension<InitStateType, ChatStateType, MessageStateType, ConfigType>,
+    InitStateType, ChatStateType, MessageStateType, ConfigType>({ factory }: TestExtensionRunnerProps<ExtensionType, InitStateType, ChatStateType, MessageStateType, ConfigType>) => {
 
     // @ts-ignore the linter doesn't like the idea of reading the imaginary Emotion type arbitrarily from strings
     const [extension, _setExtension] = useState(new Expressions(InitData));

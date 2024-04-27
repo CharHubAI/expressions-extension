@@ -3,44 +3,70 @@ import {Extension, ExtensionResponse, InitialData, Message} from "chub-extension
 import {LoadResponse} from "chub-extensions-ts/dist/types/load";
 import {env, pipeline} from '@xenova/transformers';
 
-type StateType = { [key: string]: Emotion };
+type MessageStateType = { [key: string]: Emotion };
 type ConfigType = {
     // Optional. The alternate expression packs to use.
     selected?: {[key: string]: string} | null
 };
 
-type Emotion = "admiration" | "amusement" | "anger" | "annoyance" |
-    "approval" | "caring" | "confusion" | "curiosity" | "desire" |
-    "disappointment" | "disapproval" | "disgust" | "embarrassment" |
-    "excitement" | "fear" | "gratitude" | "grief" | "joy" | "love" |
-    "nervousness" | "optimism" | "pride" | "realization" | "relief" |
-    "remorse" | "sadness" | "surprise" | "neutral";
+enum EmotionEnum {
+    admiration = 'admiration',
+    amusement = 'amusement',
+    anger = 'anger',
+    annoyance = 'annoyance',
+    approval = 'approval',
+    caring = 'caring',
+    confusion = 'confusion',
+    curiosity = 'curiosity',
+    desire = 'desire',
+    disappointment = 'disappointment',
+    disapproval = 'disapproval',
+    disgust = 'disgust',
+    embarrassment = 'embarrassment',
+    excitement = 'excitement',
+    fear = 'fear',
+    gratitude = 'gratitude',
+    grief = 'grief',
+    joy = 'joy',
+    love = 'love',
+    nervousness = 'nervousness',
+    optimism = 'optimism',
+    pride = 'pride',
+    realization = 'realization',
+    relief = 'relief',
+    remorse = 'remorse',
+    sadness = 'sadness',
+    surprise = 'surprise',
+    neutral = 'neutral',
+}
 
-// I know there's a way to do this without having the list of strings twice.
-const EMOTIONS = new Set<string>(["admiration", "amusement", "anger", "annoyance",
-    "approval", "caring", "confusion", "curiosity", "desire",
-    "disappointment", "disapproval", "disgust", "embarrassment",
-    "excitement", "fear", "gratitude", "grief", "joy", "love",
-    "nervousness", "optimism", "pride", "realization", "relief",
-    "remorse", "sadness", "surprise", "neutral"]);
+type Emotion = {
+    [key in keyof typeof EmotionEnum]: string;
+}[keyof typeof EmotionEnum];
+
+const EMOTIONS = new Set<string>(Object.values(EmotionEnum));
 
 type EmotionPack = {
     // The string here is a URL to an image file.
     [K in Emotion]?: string;
 };
 
-export class Expressions implements Extension<StateType, ConfigType> {
+type InitStateType = null;
+
+type ChatStateType = null;
+
+export class Expressions implements Extension<InitStateType, ChatStateType, MessageStateType, ConfigType> {
 
     charsToPacks: {[key: string]: EmotionPack}
     charsToEmotions: {[key: string]: Emotion}
     pipeline: any
     hasPack: boolean
 
-    constructor(data: InitialData<StateType, ConfigType>) {
+    constructor(data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) {
         const {
             characters,
             config,
-            lastState
+            messageState
         } = data;
         this.charsToEmotions = {};
         this.charsToPacks = {};
@@ -57,7 +83,7 @@ export class Expressions implements Extension<StateType, ConfigType> {
         // instead of nice and clean.
         Object.keys(characters).forEach((charAnonId: string) => {
             if(!characters[charAnonId].isRemoved) {
-                this.charsToEmotions[charAnonId] = lastState != null && lastState.hasOwnProperty(charAnonId) && EMOTIONS.has(lastState[charAnonId]) ? lastState[charAnonId] : 'neutral';
+                this.charsToEmotions[charAnonId] = messageState != null && messageState.hasOwnProperty(charAnonId) && EMOTIONS.has(messageState[charAnonId]) ? messageState[charAnonId] : 'neutral';
                 if (characters[charAnonId].partial_extensions?.chub?.expressions?.expressions != null) {
                     this.charsToPacks = characters[charAnonId].partial_extensions?.chub?.expressions?.expressions;
                     this.hasPack = true;
@@ -73,7 +99,7 @@ export class Expressions implements Extension<StateType, ConfigType> {
         });
     }
 
-    async load(): Promise<Partial<LoadResponse>> {
+    async load(): Promise<Partial<LoadResponse<InitStateType, ChatStateType, MessageStateType>>> {
         // Note my complete and total disregard for error handling,
         // because the extension runner has it.
         this.pipeline = await pipeline("text-classification",
@@ -88,29 +114,29 @@ export class Expressions implements Extension<StateType, ConfigType> {
         };
     }
 
-    async setState(state: StateType): Promise<void> {
+    async setState(state: MessageStateType): Promise<void> {
         if (state != null) {
             this.charsToEmotions = {...this.charsToEmotions, ...state};
         }
     }
 
-    async beforePrompt(userMessage: Message): Promise<Partial<ExtensionResponse<StateType>>> {
+    async beforePrompt(userMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>> {
         // Don't really care about this.
         return {
             extensionMessage: null,
-            state: this.charsToEmotions,
+            messageState: this.charsToEmotions,
             modifiedMessage: null,
             error: null
         };
     }
 
-    async afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<StateType>>> {
+    async afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>> {
         const newEmotion = await this.pipeline(botMessage.content);
         console.info(`New emotion for ${botMessage.anonymizedId}: ${newEmotion[0].label}`);
         this.charsToEmotions[botMessage.anonymizedId] = newEmotion[0].label;
         return {
             extensionMessage: null,
-            state: this.charsToEmotions,
+            messageState: this.charsToEmotions,
             modifiedMessage: null,
             error: null
         };
