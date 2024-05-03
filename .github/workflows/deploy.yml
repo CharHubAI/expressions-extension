@@ -5,6 +5,8 @@ on:
     branches:
       - main  # Or any branch you use for releases
       - master
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
