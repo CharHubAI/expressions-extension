@@ -939,10 +939,10 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chub-extensions-ts@latest:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.2.3.tgz#23c6e6123633da3e171387010011fcdc9786b6fd"
-  integrity sha512-1CJunh/+d2CKcQm9r3sYTD3LDkBPUjYAQ8HNvoy7ZR80yGdYu+K6UNqb7M2JvmNYw+t/AN8afLE5k3PlYJLrDQ==
+chub-extensions-ts@0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/chub-extensions-ts/-/chub-extensions-ts-0.2.5.tgz#c3052b973fae2d82203782f79d9604ce9e75b61b"
+  integrity sha512-ZuXLo8498bEiyRItWA+jUEOWFLu7QxEyd8KjCsJJW/MlpTVkQR1We39ig8I5BPjoKeXQ4GzDtM6cXvezjen+Yg==
   dependencies:
     "@ffmpeg/ffmpeg" "^0.12.10"
     "@types/node" "20.10.0"
