@@ -94,15 +94,21 @@ jobs:
       - name: Setup .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        if: github.event_name == 'release' && github.event.release.tag_name != ''
+        run: |
+          git config --global user.email "bot@chub.ai"
+          git config --global user.name "Chub Bot"
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: Extract version from tag
         id: get_version
+        if: github.event_name == 'release' && github.event.release.tag_name != ''
         run: echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/v}"
         # Assumes tag is of form v1.0.0, strips the 'v'
 
       - name: Update package.json version
         run: yarn pack && yarn publish --new-version ${{ steps.get_version.outputs.VERSION }}
+        if: github.event_name == 'release' && github.event.release.tag_name != ''
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

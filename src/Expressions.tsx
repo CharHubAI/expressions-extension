@@ -101,13 +101,20 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
     }
 
     async load(): Promise<Partial<LoadResponse<InitStateType, ChatStateType, MessageStateType>>> {
-        // Note my complete and total disregard for error handling,
-        // because the extension runner has it.
-        this.pipeline = await pipeline("text-classification",
-            "SamLowe/roberta-base-go_emotions");
-        if(import.meta.env.MODE === 'development') {
-            const testResult = await this.pipeline("I love you.");
-            console.assert(testResult != null && testResult[0].label == 'love');
+        try {
+            this.pipeline = await pipeline("text-classification",
+                "SamLowe/roberta-base-go_emotions");
+        } catch (except: any) {
+            console.error(`Error loading expressions pipeline, error: ${except}`);
+            return { success: false, error: null }
+        }
+        try {
+            if(import.meta.env.MODE === 'development') {
+                const testResult = await this.pipeline("I love you.");
+                console.assert(testResult != null && testResult[0].label == 'love');
+            }
+        } catch (except: any) {
+            console.warn('import meta not supported.');
         }
         return {
             success: this.hasPack,
