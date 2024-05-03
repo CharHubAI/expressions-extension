@@ -86,7 +86,7 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
             if(!characters[charAnonId].isRemoved) {
                 this.charsToEmotions[charAnonId] = messageState != null && messageState.hasOwnProperty(charAnonId) && EMOTIONS.has(messageState[charAnonId]) ? messageState[charAnonId] : 'neutral';
                 if (characters[charAnonId].partial_extensions?.chub?.expressions?.expressions != null) {
-                    this.charsToPacks = characters[charAnonId].partial_extensions?.chub?.expressions?.expressions;
+                    this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions?.chub?.expressions?.expressions;
                     this.hasPack = true;
                 } else {
                     this.charsToPacks[charAnonId] = {};
@@ -151,16 +151,24 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
             alignItems: 'stretch'
             }}>
             {Object.keys(this.charsToEmotions).map(charId => {
-                return this.charsToPacks[charId][this.charsToEmotions[charId]] != null && <img
-                    key={`img-${charId}-${this.charsToEmotions[charId]}`}
-                    style={{
-                        width: '100%',
-                        maxHeight: '100vh',
-                        minHeight: '10px',
-                        objectFit: 'contain'
-                    }}
-                     src={this.charsToPacks[charId][this.charsToEmotions[charId]]}
-                     alt={''} />
+                if(this.charsToEmotions.hasOwnProperty(charId) && this.charsToEmotions[charId] != null &&
+                    this.charsToPacks.hasOwnProperty(charId) && this.charsToPacks[charId] != null &&
+                    this.charsToPacks[charId].hasOwnProperty(this.charsToEmotions[charId]) &&
+                    this.charsToPacks[charId][this.charsToEmotions[charId]] != null
+                ) {
+                    return <img
+                        key={`img-${charId}-${this.charsToEmotions[charId]}`}
+                        style={{
+                            width: '100%',
+                            maxHeight: '100vh',
+                            minHeight: '10px',
+                            objectFit: 'contain'
+                        }}
+                        src={this.charsToPacks[charId][this.charsToEmotions[charId]]}
+                        alt={''} />
+                } else {
+                    return <></>
+                }
             })}
         </div>;
     }
