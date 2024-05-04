@@ -77,8 +77,9 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
         // HF models for things like this.
         env.allowRemoteModels = true;
         env.allowLocalModels = false;
-        env.remoteHost = 'https://lfs.charhub.io/models/';
-        // env.remoteHost = 'https://expressions-extension-768927333d4d.c5v4v4jx6pq5.win/';
+        // This is fake and redirected within Cloudflare. If you need a model hosted/redirected
+        // for this let me know.
+        env.remoteHost = 'https://expressions-extension-768927333d4d.c5v4v4jx6pq5.win/';
 
         // Very very ugly, but just loading up emotion packs and current state,
         // with a lot of ick from most fields being optional/possibly-undefined
