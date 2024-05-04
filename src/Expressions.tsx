@@ -72,6 +72,7 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
         this.charsToEmotions = {};
         this.charsToPacks = {};
         this.hasPack = false;
+        this.pipeline = null;
         // This env setup is our own convention and not likely to be something
         // you'll want to do. We only host an extremely small subset of ONNX
         // HF models for things like this.
@@ -108,7 +109,7 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
                 "SamLowe/roberta-base-go_emotions");
         } catch (except: any) {
             console.error(`Error loading expressions pipeline, error: ${except}`);
-            return { success: false, error: null }
+            return { success: true, error: null }
         }
         try {
             if(import.meta.env.MODE === 'development') {
@@ -140,10 +141,31 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
         };
     }
 
+    fallbackClassify(text: string): string {
+        const lowered = text.toLowerCase();
+        let result = 'neutral';
+        Object.values(EmotionEnum).forEach(emotion => {
+            if(lowered.includes(emotion.toLowerCase())) {
+                result = emotion;
+            }
+        });
+        return result;
+    }
+
     async afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>> {
-        const newEmotion = await this.pipeline(botMessage.content);
-        console.info(`New emotion for ${botMessage.anonymizedId}: ${newEmotion[0].label}`);
-        this.charsToEmotions[botMessage.anonymizedId] = newEmotion[0].label;
+        let newEmotion = 'neutral';
+        if(this.pipeline != null) {
+            try {
+                newEmotion = await this.pipeline(botMessage.content)[0].label;
+            } catch (except: any) {
+                console.warn(`Error classifying expression, error: ${except}`);
+                newEmotion = this.fallbackClassify(botMessage.content);
+            }
+        } else {
+            newEmotion = this.fallbackClassify(botMessage.content);
+        }
+        console.info(`New emotion for ${botMessage.anonymizedId}: ${newEmotion}`);
+        this.charsToEmotions[botMessage.anonymizedId] = newEmotion;
         return {
             extensionMessage: null,
             messageState: this.charsToEmotions,
@@ -153,7 +175,9 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
     }
 
     render(): ReactElement {
-        return <div className="big-stacker"  style={{
+        return <div className="big-stacker"
+                    key={'big-over-stacker'}
+                    style={{
             width: '100vw',
             height: '100vh',
             display: 'grid',

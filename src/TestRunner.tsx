@@ -38,7 +38,7 @@ export const TestExtensionRunner = <ExtensionType extends Extension<InitStateTyp
     }, []);
 
     return <>
-        <div style={{display: 'none'}}>{String(node)}{window.location.href}</div>
-        {extension == null ? <div>Extension loading...</div> : extension.render()}
+        <div key={'hidden-info'} style={{display: 'none'}}>{String(node)}{window.location.href}</div>
+        {extension == null ? <div key={'loading-info'}>Extension loading...</div> : extension.render()}
     </>;
 }
