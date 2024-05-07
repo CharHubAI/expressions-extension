@@ -96,8 +96,7 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
                 }
                 if(config != null && config.selected?.hasOwnProperty(charAnonId)) {
                     this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions
-                        .chub?.expressions?.alt_expressions?.hasOwnProperty(config.selected![charAnonId]) && characters[charAnonId].partial_extensions.chub.expressions.alt_expressions[config.selected![charAnonId]].expressions != null ?
-                        characters[charAnonId].partial_extensions.chub.expressions.alt_expressions[charAnonId].expressions : this.charsToPacks[charAnonId];
+                        .chub.alt_expressions[config.selected![charAnonId]].expressions;
                 }
             }
         });
