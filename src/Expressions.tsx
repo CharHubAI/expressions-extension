@@ -1,6 +1,6 @@
 import {ReactElement} from "react";
-import {Extension, ExtensionResponse, InitialData, Message} from "chub-extensions-ts";
-import {LoadResponse} from "chub-extensions-ts/dist/types/load";
+import {StageBase, StageResponse, InitialData, Message} from "@chub-ai/stages-ts";
+import {LoadResponse} from "@chub-ai/stages-ts/dist/types/load";
 import {env, pipeline} from '@xenova/transformers';
 
 type MessageStateType = { [key: string]: Emotion };
@@ -55,7 +55,7 @@ type InitStateType = null;
 
 type ChatStateType = null;
 
-export class Expressions extends Extension<InitStateType, ChatStateType, MessageStateType, ConfigType> {
+export class Expressions extends StageBase<InitStateType, ChatStateType, MessageStateType, ConfigType> {
 
     charsToPacks: {[key: string]: EmotionPack}
     charsToEmotions: {[key: string]: Emotion}
@@ -130,10 +130,11 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
         }
     }
 
-    async beforePrompt(userMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>> {
+    async beforePrompt(userMessage: Message): Promise<Partial<StageResponse<ChatStateType, MessageStateType>>> {
         // Don't really care about this.
         return {
             extensionMessage: null,
+            stageDirections: null,
             messageState: this.charsToEmotions,
             modifiedMessage: null,
             error: null
@@ -151,7 +152,7 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
         return result;
     }
 
-    async afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>> {
+    async afterResponse(botMessage: Message): Promise<Partial<StageResponse<ChatStateType, MessageStateType>>> {
         let newEmotion = 'neutral';
         if(this.pipeline != null) {
             try {
@@ -167,6 +168,7 @@ export class Expressions extends Extension<InitStateType, ChatStateType, Message
         this.charsToEmotions[botMessage.anonymizedId] = newEmotion;
         return {
             extensionMessage: null,
+            stageDirections: null,
             messageState: this.charsToEmotions,
             modifiedMessage: null,
             error: null

@@ -90,4 +90,4 @@ permissions:
 extension_id: 'expressions-extension-768927333d4d'
 
 # Will be added if it does not exist. The URL of the repo.
-github_path: 'https://github.com/CharHubAI/expressions-extension'
+github_path: 'https://github.com/CharHubAI/expressions-stage'

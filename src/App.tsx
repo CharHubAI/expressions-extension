@@ -1,4 +1,4 @@
-import {ExtensionRunner} from "chub-extensions-ts";
+import {ReactRunner} from "@chub-ai/stages-ts";
 import {Expressions} from "./Expressions.tsx";
 import {TestExtensionRunner} from "./TestRunner.tsx";
 
@@ -7,7 +7,7 @@ function App() {
   console.info(`Running in ${import.meta.env.MODE}`);
 
   return isDev ? <TestExtensionRunner factory={ (data: any) => new Expressions(data) }/> :
-      <ExtensionRunner factory={(data: any) => new Expressions(data)} />;
+      <ReactRunner factory={(data: any) => new Expressions(data)} />;
 }
 
 export default App
