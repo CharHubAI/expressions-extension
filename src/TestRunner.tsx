@@ -23,11 +23,12 @@ export const TestExtensionRunner = <ExtensionType extends StageBase<InitStateTyp
                 console.error(`Error from extension during load, error: ${res.error}`);
             }
             extension.afterResponse({
-                identity: "",
+                identity: "", isMain: false,
                 anonymizedId: "2", promptForId: null,
                 content: "Checking what happens if sent messages for a bot without a pack.",
                 isBot: true}).then(() => setNode(new Date()));
             extension.afterResponse({
+                isMain: false,
                 identity: "",
                 anonymizedId: "1", promptForId: null,
                 content: "I'm so confused. I don't understand. What? Why? How?",

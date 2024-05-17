@@ -209,10 +209,10 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@chub-ai/stages-ts@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@chub-ai/stages-ts/-/stages-ts-0.3.1.tgz#1f95ff6a2d65a9cd2376e2d30ca3554b501ce00a"
-  integrity sha512-cfZOp5oVbiGnP1/8WXueraws0y5G5b2LTFchRuW7AqETi5U6I0ZRPfzrgakm/56FBS8yxG6wHSPxIjUKJaybsA==
+"@chub-ai/stages-ts@0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@chub-ai/stages-ts/-/stages-ts-0.3.6.tgz#c2d8fc7f45afb40d554bace28ac998d0ab0dea4f"
+  integrity sha512-mymomK6QHIIZuN61oGwa/M+HTuZcFVVzDVRx00fspBjF9Zv19m/WohYZvOB6vrJ25PwV/jdjrSRK5aPIqLK40A==
   dependencies:
     "@ffmpeg/ffmpeg" "^0.12.10"
     "@types/node" "20.10.0"
