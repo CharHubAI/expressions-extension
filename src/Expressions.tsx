@@ -94,7 +94,9 @@ export class Expressions extends StageBase<InitStateType, ChatStateType, Message
                 } else {
                     this.charsToPacks[charAnonId] = {};
                 }
-                if(config != null && config.selected?.hasOwnProperty(charAnonId)) {
+                if(config != null && config.selected != null
+                    && config.selected?.hasOwnProperty(charAnonId)
+                    && config.selected[charAnonId] != null && config.selected[charAnonId].toLowerCase() != 'default') {
                     this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions
                         .chub.alt_expressions[config.selected![charAnonId]].expressions;
                 }
