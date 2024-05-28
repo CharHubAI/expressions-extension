@@ -116,14 +116,6 @@ export class Expressions extends StageBase<InitStateType, ChatStateType, Message
             console.error(`Error loading expressions pipeline, error: ${except}`);
             return { success: true, error: null }
         }
-        try {
-            if(import.meta.env.MODE === 'development') {
-                const testResult = await this.pipeline("I love you.");
-                console.assert(testResult != null && testResult[0].label == 'love');
-            }
-        } catch (except: any) {
-            console.warn('import meta not supported.');
-        }
         return {
             success: this.hasPack,
             error: null

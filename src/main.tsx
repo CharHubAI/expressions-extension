@@ -1,4 +1,3 @@
-export {Expressions as Stage} from "./Expressions";
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.scss'
