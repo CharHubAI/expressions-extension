@@ -162,7 +162,7 @@ export class Expressions extends StageBase<InitStateType, ChatStateType, Message
         let newEmotion = 'neutral';
         if(this.pipeline != null) {
             try {
-                newEmotion = await this.pipeline(botMessage.content)[0].label;
+                newEmotion = (await this.pipeline(botMessage.content))[0].label;
             } catch (except: any) {
                 console.warn(`Error classifying expression, error: ${except}`);
                 newEmotion = this.fallbackClassify(botMessage.content);

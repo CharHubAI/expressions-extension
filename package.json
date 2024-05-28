@@ -7,7 +7,7 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "scripts": {
     "dev": "vite",
@@ -36,11 +36,5 @@
     "sass": "^1.72.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
-    }
   }
 }

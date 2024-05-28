@@ -1,6 +1,6 @@
 import {ReactRunner} from "@chub-ai/stages-ts";
-import {Expressions} from "./Expressions.tsx";
-import {TestExtensionRunner} from "./TestRunner.tsx";
+import {Expressions} from "./Expressions";
+import {TestExtensionRunner} from "./TestRunner";
 
 function App() {
   const isDev = import.meta.env.MODE === 'development';

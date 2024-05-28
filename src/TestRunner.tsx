@@ -1,4 +1,4 @@
-import {Expressions} from "./Expressions.tsx";
+import {Expressions} from "./Expressions";
 import {useEffect, useState} from "react";
 import {StageBase, InitialData} from "@chub-ai/stages-ts";
 import InitData from './assets/test-init.json';
@@ -17,7 +17,7 @@ export const TestExtensionRunner = <ExtensionType extends StageBase<InitStateTyp
     const [node, setNode] = useState(new Date());
 
     useEffect(() => {
-        extension.load().then((res) => {
+        extension.load().then((res: any) => {
             console.info(`Test StageBase Runner load success result was ${res.success}`);
             if(!res.success || res.error != null) {
                 console.error(`Error from extension during load, error: ${res.error}`);
