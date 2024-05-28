@@ -88,7 +88,7 @@ export class Expressions extends StageBase<InitStateType, ChatStateType, Message
         Object.keys(characters).forEach((charAnonId: string) => {
             if(!characters[charAnonId].isRemoved) {
                 this.charsToEmotions[charAnonId] = messageState != null && messageState.hasOwnProperty(charAnonId) && EMOTIONS.has(messageState[charAnonId]) ? messageState[charAnonId] : 'neutral';
-                if (characters[charAnonId].partial_extensions?.chub?.expressions?.expressions != null) {
+                if (characters[charAnonId]?.partial_extensions?.chub?.expressions?.expressions != null) {
                     this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions?.chub?.expressions?.expressions;
                     this.hasPack = true;
                 } else {
@@ -96,7 +96,11 @@ export class Expressions extends StageBase<InitStateType, ChatStateType, Message
                 }
                 if(config != null && config.selected != null
                     && config.selected?.hasOwnProperty(charAnonId)
-                    && config.selected[charAnonId] != null && config.selected[charAnonId].toLowerCase() != 'default') {
+                    && config.selected[charAnonId] != null
+                    && config.selected[charAnonId] != ''
+                    && config.selected[charAnonId].toLowerCase() != 'default'
+                    && characters[charAnonId]?.partial_extensions.chub.alt_expressions != null
+                && config.selected[charAnonId] in characters[charAnonId]?.partial_extensions.chub.alt_expressions) {
                     this.charsToPacks[charAnonId] = characters[charAnonId].partial_extensions
                         .chub.alt_expressions[config.selected![charAnonId]].expressions;
                 }
